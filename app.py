@@ -98,11 +98,12 @@ def main():
         input_data = prepare_input(pickup_datetime, pickup_longitude, pickup_latitude,
                                    dropoff_longitude, dropoff_latitude, passenger_count)
         
-        # Make prediction
-        prediction = model.predict(input_data)
-        
-        # Display result
-        st.success(f"The predicted fare is: ${prediction[0][0]:.2f}")
+       # Make prediction and scale it down
+scaled_fare = model.predict(input_data)[0][0] / 10
+
+    # Display result
+st.success(f"The predicted fare is: ${scaled_fare:.2f}")
+
 
 def prepare_input(pickup_datetime, pickup_longitude, pickup_latitude,
                   dropoff_longitude, dropoff_latitude, passenger_count):
