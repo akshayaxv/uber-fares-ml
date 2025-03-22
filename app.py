@@ -93,7 +93,7 @@ def main():
             model = load_model()
 
             # Make prediction and scale
-            scaled_fare = model.predict(input_data)[0][0] / 10
+            scaled_fare = model.predict(input_data)[0][0] / 100
 
             # Display
             st.success(f"The predicted fare is: ${scaled_fare:.2f}")
