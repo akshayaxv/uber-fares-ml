@@ -121,10 +121,13 @@ def prepare_input(pickup_datetime, pickup_longitude, pickup_latitude,
     })
     
     # Calculate distance
-    input_df['dist_travel_km'] = haversine_distance(
-        input_df['pickup_latitude'], input_df['pickup_longitude'],
-        input_df['dropoff_latitude'], input_df['dropoff_longitude']
-    )
+    input_df['dist_travel_km'] = input_df.apply(
+    lambda row: haversine_distance(
+        row['pickup_latitude'],
+        row['pickup_longitude'],
+        row['dropoff_latitude'],
+        row['dropoff_longitude']), axis=1)
+
     
     # Calculate derived features
     input_df['distance_time_interaction'] = input_df['dist_travel_km'] * input_df['hour']
@@ -141,18 +144,16 @@ def prepare_input(pickup_datetime, pickup_longitude, pickup_latitude,
     return input_array
 
 def haversine_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Earth's radius in kilometers
-
+    lat1, lon1, lat2, lon2 = map(float, [lat1, lon1, lat2, lon2])  # Ensure values are float
     lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-    
     dlat = lat2 - lat1
     dlon = lon2 - lon1
-    
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1-a))
-    
-    distance = R * c
-    return distance
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    distance_km = 6371 * c
+    return distance_km
+
 
 def get_coordinates(street, city, province, country):
     geolocator = Nominatim(user_agent="uber-fare-prediction")
