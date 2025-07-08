@@ -42,6 +42,6 @@ Ensure you have the following installed:
 4) Output: The predicted fare is displayed on the screen.
 
 ## Contact
-For any inquiries, please contact myhema05@gmail.com.
+For any inquiries, please contact myhema05@gmail.com , akshaya.07.sep@gmail.com
 
 
