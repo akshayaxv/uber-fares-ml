@@ -16,7 +16,7 @@ def load_model():
     return tf.keras.models.load_model('model.h5', custom_objects={'mse': tf.keras.losses.MeanSquaredError()})
 
 
-# Streamlit app
+# Streamlit
 def main():
     # Custom CSS for dark theme and layout
     st.markdown("""
